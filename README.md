@@ -1,2 +1,2 @@
 # InfoVis
-text analyse
+`python analyzer.py source.txt`
