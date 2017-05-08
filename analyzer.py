@@ -35,6 +35,37 @@ class Lemma(object):
 
 
 #########################################################
+def get_avg_word_distance(word1, word2, text):
+    if word1 is word2:
+        return
+
+    distances = []
+    counter = 0;
+    counting = False
+    # foreward
+    for w in text:
+        if w in word1:
+            counting = True
+        if w in word2:
+            counting = False
+            if counter > 0:
+                distances.append(counter)
+                counter = 0
+        if counting:
+            counter +=1
+    # backward
+    for w in text:
+        if w in word2:
+            counting = True
+        if w in word1:
+            counting = False
+            if counter > 0:
+                distances.append(counter)
+                counter = 0
+        if counting:
+            counter +=1
+    # print distances
+    return sum(distances) / float(len(distances))
 
 
 
@@ -89,8 +120,20 @@ def main():
     # for word in stop_words:
     #     print word.name
 
-    for lemma in lemmata:
-        print lemma.name
+    for lemma in lemmata[-9:]: # last 10 of list
+        print "{"
+        print "\"name\": " + "\"" + lemma.name + "\"" + ","
+        print "\"idf\": " + str(lemma.idf(lemmata, len(text))) + ","
+        print "\"avg_distance\": " + str(get_avg_word_distance(lemmata[len(lemmata)-1].name, lemma.name, text))
+        print "},"
+
+
+    # print lemmata[len(lemmata)-1].name, lemmata[len(lemmata)-2].name
+    # print(get_avg_word_distance(lemmata[len(lemmata)-1].name, lemmata[len(lemmata)-2].name, text))
+    # print lemmata[len(lemmata)-1].name, lemmata[len(lemmata)-3].name
+    # print(get_avg_word_distance(lemmata[len(lemmata)-1].name, lemmata[len(lemmata)-3].name, text))
+    # print lemmata[len(lemmata)-1].name, lemmata[len(lemmata)-4].name
+    # print(get_avg_word_distance(lemmata[len(lemmata)-1].name, lemmata[len(lemmata)-4].name, text))
 
 
 if __name__ == '__main__':

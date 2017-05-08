@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+body {
+  margin: 0px;
+  padding: 0px;
+}
+</style>
+</head>
+<body>
+  <canvas id="myCanvas" width="578" height="200"></canvas>
+  <script>
+
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  var data = [{
+    "name": "group",
+    "idf": 0.0788954635108,
+    "avg_distance": 52.2779783394
+  },
+  {
+    "name": "specie",
+    "idf": 0.0808678500986,
+    "avg_distance": 53.0526315789
+  },
+  {
+    "name": "male",
+    "idf": 0.0808678500986,
+    "avg_distance": 30.25390625
+  },
+  {
+    "name": "trunk",
+    "idf": 0.0867850098619,
+    "avg_distance": 46.3642172524
+  },
+  {
+    "name": "retriev",
+    "idf": 0.0966469428008,
+    "avg_distance": 54.1742424242
+  },
+  {
+    "name": "animal",
+    "idf": 0.132149901381,
+    "avg_distance": 20.5239726027
+  },
+  {
+    "name": "asian",
+    "idf": 0.143984220907,
+    "avg_distance": 19.4802784223
+  },
+  {
+    "name": "african",
+    "idf": 0.157790927022,
+    "avg_distance": 17.247311828
+  },
+  {
+    "name": "elephant",
+    "idf": 1.0,
+    "avg_distance": 0
+  }];
+
+
+  var canvas = document.getElementById('myCanvas');
+  var context = canvas.getContext('2d');
+  var centerX = canvas.width / 2;
+  var centerY = canvas.height / 2;
+  function draw_circle(name, radius, x){
+    context.beginPath();
+    context.arc(x, centerY, radius, 0, 2 * Math.PI, false);
+    context.fillStyle = getRandomColor();
+    context.fill();
+    context.lineWidth = 0;
+    context.strokeStyle = '#003300';
+    context.stroke();
+
+    context.font = 'italic 8pt Calibri';
+    context.fillText(name, x, centerY + 100);
+  }
+
+  data.forEach(function(d){
+    context.save();
+    context.translate(100,0);
+    draw_circle(d.name, d.idf * 50, d.avg_distance * 5);
+    context.restore();
+  });
+
+
+  </script>
+</body>
+</html>
