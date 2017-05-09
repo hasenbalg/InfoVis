@@ -9,7 +9,7 @@ body {
 </style>
 </head>
 <body>
-  <canvas id="myCanvas" width="578" height="200"></canvas>
+  <canvas id="myCanvas" width="700" height="700"></canvas>
   <script>
 
   function getRandomColor() {
@@ -71,23 +71,42 @@ body {
   var context = canvas.getContext('2d');
   var centerX = canvas.width / 2;
   var centerY = canvas.height / 2;
-  function draw_circle(name, radius, x){
+  var counter = 0;
+  function draw_circle(name, radius, x, counter, length){
+    var rad = 2*Math.PI * counter/length - 1;
+    if(name != "elephant"){
+      x = x * Math.cos(-rad);
+      var y = centerY * Math.sin(-rad);
+    }else{
+      x = 0;
+      var y = 0;
+    }
+    context.strokeStyle = '#003300';
     context.beginPath();
-    context.arc(x, centerY, radius, 0, 2 * Math.PI, false);
+    context.moveTo(0, 0);
+    context.lineTo(x, y);
+    context.stroke();
+    
+    context.beginPath();
     context.fillStyle = getRandomColor();
+    context.arc(x, y, radius, 0, 2 * Math.PI, false);
+    //context.arc(x * Math.cos(-rad), centerY * Math.sin(-rad), radius, 0, 2 * Math.PI, false);
     context.fill();
     context.lineWidth = 0;
     context.strokeStyle = '#003300';
     context.stroke();
 
     context.font = 'italic 8pt Calibri';
-    context.fillText(name, x, centerY + 100);
+    context.fillStyle = '#003300';
+    context.fillText(name, x, y + 10);
+
+
   }
 
   data.forEach(function(d){
     context.save();
-    context.translate(100,0);
-    draw_circle(d.name, d.idf * 50, d.avg_distance * 5);
+    context.translate(canvas.width/2,canvas.height/2);
+    draw_circle(d.name, d.idf * 50, d.avg_distance * 5, counter++, data.length);
     context.restore();
   });
 
