@@ -60,6 +60,8 @@ def main():
     global stopwords
     stopwords = nltk.corpus.stopwords.words('english')
     stopwords.extend(["fig", "also", "becomes", ";"])
+
+
     if not sys.argv[1]:
         return
     # read text

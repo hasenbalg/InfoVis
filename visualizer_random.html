@@ -1,0 +1,115 @@
+<canvas id="myCanvas" width="300" height="300"></canvas>
+<input type="range" id="slider" name="" value="40" min="2" max="30">
+
+<script type="text/javascript">
+var amount_of_displayed_data_sets = 10;
+var data = {"four": 69, "central": 27, "single": 31, "parietal": 48, "process": 492, "upward": 109, "edge": 34, "size": 84, "attachment": 301, "ridge": 157, "digitorum": 20, "14": 20, "center": 186, "found": 24, "appear": 25, "hand": 20, "lamina": 26, "lateralward": 95, "femur": 73, "however": 18, "sixth": 29, "tibialis": 19, "brevis": 22, "either": 114, "f": 213, "lacrimal": 57, "distal": 27, "lower": 276, "le": 54, "laterally": 74, "pointed": 22, "interosseous": 27, "termed": 30, "fiber": 38, "formation": 18, "subcutaneous": 18, "present": 236, "arch": 75, "especially": 17, "circumference": 31, "origin": 114, "pterygoid": 60, "lip": 28, "attached": 66, "vertical": 64, "median": 31, "posterior": 404, "manner": 17, "perpendicular": 24, "atlas": 18, "beneath": 17, "rounded": 68, "angle": 163, "cleft": 18, "wing": 57, "long": 50, "anatomy": 49, "junction": 62, "face": 24, "occasionally": 54, "femoris": 21, "seventh": 32, "union": 27, "point": 77, "symphysis": 21, "sphenoid": 86, "male": 30, "project": 45, "support": 34, "sternal": 19, "ilium": 21, "septum": 26, "another": 36, "case": 23, "group": 30, "medialward": 73, "oval": 58, "great": 54, "medially": 51, "canal": 142, "1": 64, "aspect": 30, "occipital": 89, "inferior": 233, "becomes": 25, "rect": 35, "costal": 34, "obturator": 43, "orbital": 116, "sulcus": 37, "orifice": 28, "foramen": 264, "sphenoidal": 53, "appearance": 21, "ethmoid": 49, "nuchal": 17, "http": 35, "space": 24, "phalanx": 34, "meatus": 48, "tympanic": 54, "3": 56, "quadratus": 18, "passage": 44, "external": 54, "line": 193, "formed": 72, "neck": 55, "six": 20, "incisive": 20, "margin": 138, "wall": 99, "curved": 63, "diameter": 32, "maxilla": 61, "deeply": 20, "bony": 23, "thin": 92, "extremity": 158, "ischium": 23, "quadrilateral": 40, "cuboid": 21, "vomer": 31, "serf": 40, "broad": 66, "slight": 25, "articulates": 168, "serrated": 30, "curve": 38, "corresponds": 20, "8": 35, "lateral": 403, "concave": 150, "spinous": 28, "pelvic": 25, "root": 36, "opposite": 38, "small": 146, "bounded": 53, "placed": 34, "cell": 29, "former": 25, "generally": 18, "near": 88, "level": 30, "birth": 57, "11": 26, "little": 56, "groove": 208, "cartilage": 93, "ligament": 179, "right": 57, "numerous": 20, "spine": 72, "segment": 31, "mastoid": 70, "vertebra": 77, "triangular": 125, "concavity": 20, "adult": 31, "join": 35, "ethmoidal": 46, "parallel": 19, "ig": 210, "received": 20, "broader": 34, "12": 23, "upper": 330, "fascia": 22, "third": 124, "pterygopalatine": 20, "meningeal": 25, "epiphysis": 18, "acetabulum": 24, "foot": 25, "oblique": 44, "large": 90, "left": 87, "longitudinal": 29, "tendon": 99, "carpus": 33, "united": 29, "branch": 47, "pedicle": 28, "gray": 49, "separated": 74, "longus": 45, "one": 204, "muscle": 68, "five": 26, "layer": 23, "carotid": 23, "lie": 29, "radius": 20, "corresponding": 49, "across": 17, "axis": 37, "thicker": 19, "scapula": 18, "ring": 17, "aperture": 63, "volar": 36, "boundary": 33, "epicondyle": 17, "named": 40, "larger": 31, "temporal": 121, "tenth": 20, "portion": 235, "trochanter": 41, "also": 44, "sometimes": 78, "thus": 18, "affords": 40, "narrow": 65, "opening": 56, "skull": 100, "plantar": 24, "compact": 34, "plate": 135, "may": 87, "jugular": 39, "greater": 102, "thoracic": 58, "week": 31, "ossified": 66, "appears": 41, "posteriorly": 19, "henry": 49, "vein": 31, "smaller": 42, "directed": 136, "much": 31, "continuous": 75, "known": 18, "female": 37, "proximal": 26, "sagittal": 41, "styloid": 27, "outer": 56, "nearly": 34, "direction": 40, "membrane": 50, "magnum": 33, "rough": 168, "smooth": 138, "internal": 72, "brain": 17, "mandible": 38, "half": 42, "notch": 119, "head": 126, "rib": 98, "300": 35, "tibia": 22, "projecting": 29, "border": 367, "body": 344, "bone": 763, "depression": 93, "increase": 20, "whole": 19, "pollicis": 19, "front": 263, "petrous": 25, "frequently": 29, "joined": 28, "metatarsal": 55, "form": 295, "structure": 41, "give": 201, "stress": 45, "year": 111, "mandibular": 26, "extends": 64, "called": 42, "maxillary": 38, "considerable": 25, "somewhat": 46, "vessel": 66, "open": 28, "take": 25, "forming": 32, "cranium": 23, "os": 21, "month": 44, "irregular": 42, "superior": 219, "image": 210, "fetal": 51, "articulation": 151, "palate": 19, "apex": 54, "floor": 41, "major": 21, "usually": 39, "ossification": 83, "row": 32, "latter": 31, "piece": 26, "ha": 66, "9": 28, "thick": 48, "tubercle": 133, "life": 69, "convex": 122, "artery": 67, "5": 51, "enlarged": 220, "strong": 27, "downward": 176, "internus": 22, "vertebral": 80, "acoustic": 24, "ramus": 54, "lunate": 22, "behind": 241, "transverse": 123, "articular": 184, "begin": 46, "trabecul\u00e6": 50, "capitate": 22, "gradually": 25, "flexor": 42, "along": 27, "medial": 313, "13": 21, "prominent": 87, "script": 35, "concha": 37, "inner": 55, "view": 23, "coronoid": 22, "crest": 103, "mass": 17, "characteristic": 17, "side": 344, "connected": 19, "roof": 29, "pubis": 32, "tissue": 35, "7": 37, "base": 120, "zygomatic": 90, "prolonged": 23, "ulna": 22, "impression": 24, "second": 122, "coccyx": 31, "articulate": 21, "projection": 20, "cervical": 54, "shaft": 46, "region": 60, "metacarpal": 56, "squama": 60, "talus": 32, "sacral": 45, "column": 27, "rest": 39, "sinus": 83, "backward": 155, "facet": 130, "fifth": 60, "alveolar": 41, "basilar": 19, "fig": 202, "two": 381, "often": 24, "extent": 27, "separate": 60, "tuberosity": 50, "frontal": 121, "look": 17, "nerve": 152, "extending": 24, "length": 48, "largest": 21, "slightly": 59, "orbit": 46, "sacrum": 47, "elevation": 17, "area": 62, "fissure": 58, "nose": 36, "fourth": 70, "similar": 19, "system": 24, "almost": 26, "cm": 30, "section": 30, "insertion": 56, "cribriform": 17, "puberty": 17, "pelvis": 58, "divided": 42, "capsule": 17, "fresh": 27, "mental": 22, "first": 152, "sharp": 26, "last": 19, "marked": 81, "vertebr\u00e6": 77, "lumbar": 48, "plane": 30, "1918": 49, "semilunar": 17, "lodge": 40, "lamin\u00e6": 29, "short": 27, "back": 55, "eighth": 37, "covered": 46, "deep": 58, "pyramidal": 21, "end": 167, "compressive": 17, "15": 18, "calcaneus": 25, "part": 685, "navicular": 44, "transmission": 23, "unite": 22, "ulnar": 20, "number": 33, "twelfth": 21, "surface": 893, "cavity": 136, "sternum": 27, "radial": 32, "extensor": 30, "state": 33, "shallow": 46, "toward": 27, "transmits": 56, "maxill\u00e6": 24, "see": 214, "suture": 85, "interval": 30, "seen": 53, "flat": 32, "teeth": 41, "together": 20, "cornu": 23, "infratemporal": 33, "4": 52, "situated": 77, "foss\u00e6": 19, "division": 17, "limited": 19, "intermediate": 18, "2": 62, "like": 23, "6": 44, "multangular": 28, "developed": 27, "cartilaginous": 31, "malleolus": 19, "lesser": 70, "upon": 20, "eminence": 81, "different": 27, "250": 38, "nasal": 153, "air": 23, "middle": 202, "articulated": 23, "immediately": 30, "joint": 24, "converted": 20, "age": 30, "forward": 131, "shape": 40, "human": 55, "obliquely": 46, "condyle": 59, "flattened": 53, "furrow": 20, "perforated": 28, "make": 19, "horizontal": 51, "10": 29, "incisor": 21, "9207548925": 35, "grooved": 28, "maximum": 22, "run": 54, "consists": 59, "cuneiform": 50, "processus": 18, "varies": 24, "position": 30, "fossa": 169, "humerus": 19, "anterior": 415, "infraorbital": 19, "dorsal": 59, "three": 136, "palatine": 78};
+
+// http://stackoverflow.com/a/1069840/4062341
+var ordered_data = [];
+for (var d in data) {
+  ordered_data.push([d, data[d]]);
+}
+
+ordered_data.sort(function(a, b) {
+  return a[1] - b[1];
+});
+
+var amount_of_displayed_data_sets = 3;
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++ ) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
+
+// canvas variables
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var cw = canvas.width;
+var ch = canvas.height;
+// http://jsfiddle.net/m1erickson/XcMMA/
+// an array of circle objects
+var circles = [];
+function recalculate(){
+  circles = [];
+  for (var i = 1; i < amount_of_displayed_data_sets; i++) {
+    newCircle(ordered_data.length - i);
+  }
+}
+
+function newCircle(index) {
+  // var ball = {
+  //   "name": ordered_data[i][0],
+  //   "color": getRandomColor(),
+  //   "radius": ordered_data[i][1],
+  //   "position": {"x": 0,"y": 0}
+  // };
+  console.log(ordered_data[index][1]);
+  var r =  ordered_data[index][1] * .01;
+  var x = Math.random() * (cw-2*r) + r;
+  var y = Math.random() * (ch-2*r) + r;
+
+  // make sure new circle doesn't overlap any existing circles
+  while (true) {
+    var hit = 0;
+    for (var i = 0; i < circles.length; i++) {
+      var circle = circles[i];
+      var dx = x - circle.x;
+      var dy = y - circle.y;
+      var rr = r + circle.radius;
+      if (dx * dx + dy * dy < rr * rr) {
+        hit++;
+      }
+    }
+    // new circle doesn't overlap any other, so break
+    if (hit == 0) {
+      break;
+    }
+    var x = Math.random() * (cw-2*r) + r;
+    var y = Math.random() * (ch-2*r) + r;
+  }
+
+  // push a new circle into circles
+  circles.push({
+    x: x,
+    y: y,
+    radius: r,
+    color: getRandomColor(),
+    name: ordered_data[index][0],
+  });
+}
+
+
+function drawAll() {
+  ctx.clearRect(0, 0, cw, ch);
+  for (var i = 0; i < circles.length; i++) {
+    var circle = circles[i];
+    ctx.beginPath();
+    ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fillStyle = circle.color;
+    ctx.fill();
+
+    ctx.font = 'italic 8pt Calibri';
+    ctx.fillStyle = '#003300';
+    ctx.fillText(circle.name, circle.x, circle.y + 10);
+  }
+}
+
+document.getElementById('slider').onchange = function(){
+  amount_of_displayed_data_sets = this.value;
+  console.log(this.value);
+  recalculate();
+  drawAll();
+}
+
+
+recalculate();
+drawAll();
+
+</script>
