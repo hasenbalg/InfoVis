@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bubble Plot</title>
+  </head>
+  <style media="screen">
+    .bubble{
+      fill: lightblue;
+    }
+    .text{
+      fill: black;
+    }
+  </style>
+  <body>
+
+
+    <h1 id="heading"></h1>
+    <h2>Bubble Diagram</h2>
+    <p>Chart from <a href="https://jrue.github.io/coding/2014/exercises/basicbubblepackchart/">https://jrue.github.io/coding/2014/exercises/basicbubblepackchart/</a> with minor modifications.</p>
+    <p>The size of the bubble represents the idf of the word.</p>
+    <svg id="bubble" width="1000" height="600">
+
+    </svg>
+    <script src="../data.js" charset="utf-8"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript">
+
+//https://jrue.github.io/coding/2014/exercises/basicbubblepackchart/
+var diameter = 500, //max size of the bubbles
+  color    = d3.scale.category20b(); //color category
+
+var bubble = d3.layout.pack()
+  .sort(null)
+  .size([diameter, diameter])
+  .padding(1.5);
+
+var svg = d3.select("#bubble")
+  .append("svg")
+  .attr("width", diameter)
+  .attr("height", diameter)
+  .attr("class", "bubble");
+
+// d3.json(frequencies, function(error, data){
+
+  //convert numerical values from strings to numbers
+  data = frequencies.map(function(d){ d.value = +d["idf"]; return d; });
+
+  //bubbles needs very specific format, convert data to this.
+  var nodes = bubble.nodes({children:data}).filter(function(d) { return !d.children; });
+
+  //setup the chart
+  var bubbles = svg.append("g")
+      .attr("transform", "translate(0,0)")
+      .selectAll(".bubble")
+      .data(nodes)
+      .enter();
+
+  //create the bubbles
+  bubbles.append("circle")
+      .attr("r", function(d){ return d.r; })
+      .attr("cx", function(d){ return d.x; })
+      .attr("cy", function(d){ return d.y; })
+      .classed('bubble', true)
+      // .style("fill", function(d) { return color(d.value); });
+
+  //format the text for each bubble
+  bubbles.append("text")
+      .attr("x", function(d){ return d.x; })
+      .attr("y", function(d){ return d.y + 5; })
+      .attr("text-anchor", "middle")
+      .text(function(d){ return d["word"]; })
+      .classed('text', true)
+      .style({
+          "font-size": ".5em"
+      });
+// })
+d3.select("#heading").text(title);
+    </script>
+  </body>
+</html>

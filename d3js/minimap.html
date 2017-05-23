@@ -1,0 +1,80 @@
+<style media="screen">
+*{
+  margin: 0;
+  padding: 0;
+}
+body, .wrapper, #small, #big{
+  height: 100%;
+}
+.wrapper{
+  width:100%;
+}
+#small, #big{
+  width:48%;
+  /*height:700px;*/
+  /*display: inline-block;*/
+}
+#small{
+  /*background-color: wheat;*/
+  float: left;
+}
+#big{
+  background-color: red;
+  float: right;
+}
+p{
+  margin-left: 2em;
+  margin-top: 2em;
+}
+</style>
+<div class="wrapper">
+  <div id="small"></div>
+  <div id="big"></div>
+</div>
+<script src="../data.js" charset="utf-8"></script>
+<script type="text/javascript">
+
+function hashCode(str) {
+  // http://stackoverflow.com/a/34842797/4062341
+  return str.split('').reduce((prevHash, currVal) =>
+  ((prevHash << 5) - prevHash) + currVal.charCodeAt(0), 0);
+}
+
+function intToHex(d) {
+  // http://stackoverflow.com/a/13240395/4062341
+  return  ("0"+(Number(d).toString(16))).slice(-2).toUpperCase()
+}
+
+function countLines(container) {
+  // http://stackoverflow.com/a/783936/4062341
+  var divHeight = container.offsetHeight
+  var lineHeight = parseInt(container.style.lineHeight);
+  var lines = divHeight / lineHeight;
+  return lines;
+}
+var small = document.getElementById('small');
+//small.height = window.innerHeight;
+var p = document.createElement("p");
+var output = ''
+for (var i = 0; i < mini_map.length; i++) {
+  var found = false;
+  for(var j = 0; j < frequencies.length; j++ ){
+    if(mini_map[i].includes(frequencies[j].word)){
+      found = true;
+      var color = intToHex(hashCode(frequencies[j].word));
+      console.log(color);
+      continue;
+    }
+  }
+  output +=  (found  ? '<span style="background-color: #' + color + color + color + '">' + mini_map[i] + '</span> ' : mini_map[i] + ' ');
+
+}
+p.innerHTML = output;
+small.appendChild(p);
+
+while(small.offsetHeight <= p.offsetHeight){
+  var fontSize = parseFloat(p.style.fontSize);
+  if(isNaN(fontSize)){p.style.fontSize = '5pt';}
+  p.style.fontSize = (fontSize - .1) + 'pt';
+}
+</script>

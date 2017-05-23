@@ -1,0 +1,166 @@
+<style media="screen">
+*{
+  margin: 0;
+  padding: 0;
+}
+body, .wrapper, #small, #big{
+  height: 100%;
+  overflow-y: hidden;
+}
+.wrapper{
+  width:100%;
+}
+#small, #big{
+  padding-top: 2px;
+  padding-left: 2px;
+}
+#small{
+  float: left;
+}
+#big{
+  float: right;
+}
+
+#fo{
+  width:100%;
+  height:100%;
+}
+
+
+</style>
+<div class="wrapper">
+
+  <svg id="small">
+
+      <!-- http://stackoverflow.com/a/4991339/4062341 -->
+    <foreignObject x="0" y="0" width="100%" height="100%" id="fo">
+    <div xmlns="http://www.w3.org/1999/xhtml" id="txt" width="100%" style="white-space: pre-wrap;">Text goes here</div>
+    </foreignObject>
+
+
+  </svg>
+  <div id="big">
+    <canvas id="myCanvas" width="300" height="300"></canvas>
+  </div>
+</div>
+<script src="../data.js" charset="utf-8"></script>
+<script type="text/javascript">
+// draw SVG
+
+function hwb2rgb(h, w, b) {
+  // http://stackoverflow.com/a/29463581/4062341
+
+  h *= 6;
+
+  var v = 1 - b, n, f, i;
+  if (!h) return {r:v, g:v, b:v};
+  i = h|0;
+  f = h - i;
+  if (i & 1) f = 1 - f;
+  n = w + f * (v - w);
+  v = (v * 255)|0;
+  n = (n * 255)|0;
+  w = (w * 255)|0;
+
+  switch(i) {
+    case 6:
+    case 0: return {r:v, g:n, b: w};
+    case 1: return {r:n, g:v, b: w};
+    case 2: return {r:w, g:v, b: n};
+    case 3: return {r:w, g:n, b: v};
+    case 4: return {r:n, g:w, b: v};
+    case 5: return {r:v, g:w, b: n};
+  }
+}
+
+
+function countLines(container) {
+  // http://stackoverflow.com/a/783936/4062341
+  var divHeight = container.offsetHeight
+  var lineHeight = parseInt(container.style.lineHeight);
+  var lines = divHeight / lineHeight;
+  return lines;
+}
+
+
+
+var small = document.getElementById('small');
+small.setAttribute('width', window.innerWidth/100*48);
+small.width = window.innerWidth/100*48;
+
+var output = ''
+for (var i = 0; i < mini_map.length; i++) {
+  var found = false;
+  for(var j = 0; j < frequencies.length; j++ ){
+    if(mini_map[i].includes(frequencies[j].word)){
+      found = true;
+
+      var color = 'rgb('
+       + hwb2rgb(1-(j*.9/frequencies.length), .2, .2).r + ','
+       + hwb2rgb(1-(j*.9/frequencies.length), .2, .2).g + ','
+       + hwb2rgb(1-(j*.9/frequencies.length), .2, .2).b + ')';
+      // console.log(color);
+      continue;
+    }
+  }
+  output +=  (found  ? '<span style="background-color: ' + color + '">' + mini_map[i] + '</span> ' : mini_map[i] + ' ');
+
+}
+
+var txt = document.getElementById('txt');
+txt.innerHTML = output;
+while(small.height.baseVal.value <= txt.offsetHeight){
+  var fontSize = parseFloat(txt.style.fontSize);
+  if(isNaN(fontSize)){txt.style.fontSize = '5pt';}
+  txt.style.fontSize = (fontSize - .1) + 'pt';
+}
+</script>
+
+<script type="text/javascript">
+// draw canvas
+var big = document.getElementById('big');
+
+var c = document.getElementById('myCanvas');
+c.width = window.innerWidth/100*48;
+c.height = big.offsetHeight;
+var ctx = c.getContext('2d');
+
+var serializer = new XMLSerializer();
+var svg_str = serializer.serializeToString(small);
+
+
+
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Drawing_DOM_objects_into_a_canvas
+var DOMURL = window.URL || window.webkitURL || window;
+
+var img = new Image();
+var svg = new Blob([svg_str], {type: 'image/svg+xml'});
+var url = DOMURL.createObjectURL(svg);
+
+img.onload = function() {
+  ctx.drawImage(img, 0, 0);
+  DOMURL.revokeObjectURL(url);
+}
+
+img.src = url;
+
+var frame = 100;
+var ratio = c.width/c.height;
+small.onmousemove = function(e){
+  var x = e.clientX;
+    var y = e.clientY;
+    ctx.clearRect(0,0,c.width, c.height);
+    ctx.drawImage(img, e.clientX, e.clientY, frame * ratio,frame, 0,0, c.width, c.height);
+}
+small.onmousewheel = function(e){
+  var scroll_speed = 5;
+  if (e.deltaY > 0) {
+    frame += scroll_speed;
+  }else {
+    frame -= scroll_speed;
+  }
+  ctx.clearRect(0,0,c.width, c.height);
+  ctx.drawImage(img, e.clientX , e.clientY, frame * ratio,frame, 0,0, c.width, c.height);
+}
+</script>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.link {
+  stroke: #ccc;
+}
+
+.node text {
+  pointer-events: none;
+  font: 10px sans-serif;
+}
+
+</style>
+<body>
+  <h1 id="heading"></h1>
+  <h2>Force Diagram</h2>
+  <p>Chart from <a href="https://bl.ocks.org/mbostock/950642">https://bl.ocks.org/mbostock/950642</a> with minor modifications.</p>
+  <p>The thickness of the link reflects how often the top <span id="top_x">huhu</span> words appear together in sentences.</p>
+  <p>The radius of the node defines the IDF of the word.</p>
+
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="../data.js"></script>
+<script>
+
+
+
+
+
+var width = 960,
+    height = 500
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var force = d3.layout.force()
+    .gravity(0.02)
+    .distance(200)
+    .charge(-100)
+    .size([width, height]);
+
+// d3.json("graph.json", function(error, json) {
+//   if (error) throw error;
+  json = force_data;
+  force
+      .nodes(json.nodes)
+      .links(json.links)
+      .start();
+
+  var link = svg.selectAll(".link")
+      .data(json.links)
+    .enter().append("line")
+      .attr("class", "link");
+
+  var node = svg.selectAll(".node")
+      .data(json.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .call(force.drag);
+
+  node.append("circle")
+        .attr("class", "node")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        // .attr("r", 16)
+        .attr("r", function(d){
+          // http://stackoverflow.com/a/39529049/4062341
+          var idf = frequencies[force_data.nodes.findIndex(item => item.name === d.name)].idf;
+          return idf* 16;
+        })
+        .style("fill", 'lightgray').style("opacity", '.5');
+
+  node.append("text")
+      .attr("dx", 0)
+      .attr("dy", 0)
+      .text(function(d) { return d.name });
+
+  force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; })
+        .style("stroke-width", function(d) { return d.value/20; });
+
+
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+  });
+// });
+d3.select("#heading").text(title);
+d3.select("#top_x").text(force_data.nodes.length);
+
+
+</script>

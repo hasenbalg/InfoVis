@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+</style>
+<body>
+  <h1 id="heading"></h1>
+  <h2>Histogram</h2>
+  <p>Chart from <a href="https://bl.ocks.org/mbostock/3885304">https://bl.ocks.org/mbostock/3885304</a>  with minor modifications.</p>
+</body>
+<svg width="960" height="500"></svg>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="../data.js"></script>
+
+<script>
+
+var svg = d3.select("svg"),
+    margin = {top: 40, right: 20, bottom: 60, left: 40},
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom;
+
+var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
+    y = d3.scaleLinear().rangeRound([height, 0]);
+
+var g = svg.append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// d3.tsv("data.tsv", function(d) {
+  // d.idf = +d.idf;
+  // return d;
+// }, function(error, data) {
+//   if (error) throw error;
+  var data = frequencies;
+  x.domain(data.map(function(d) { return d.word; }));
+  y.domain([0, d3.max(data, function(d) { return d.idf; })]);
+
+  g.selectAll(".bar")
+    .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.word); })
+      .attr("y", function(d) { return y(d.idf); })
+      .attr("width", x.bandwidth())
+      .attr("height", function(d) { return height - y(d.idf); });
+
+  g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+        .classed('text', true)
+        // https://bl.ocks.org/mbostock/4403522
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start");
+
+  var yAxis = g.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y))
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", 10)
+      .attr("text-anchor", "end")
+      .text("idf")
+      .style("stroke","black")
+      .attr("dy", "1em");
+
+
+
+// });
+d3.select("#heading").text(title);
+</script>
+
+<!-- volle hoehe beim drueber hovern
+alle in relation zum hoechsten setzen -->
