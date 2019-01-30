@@ -50,7 +50,7 @@ def make_json_from_tuple(list, textList):
     max_tf = max_occurence/len(textList)
     output = ""
     for t in list:
-        # https://mkaz.tech/code/python-string-format-cookbook/
+        # https://mkaz.blog/code/python-string-format-cookbook/
         output += "{" + ("'word': '{}', 'idf': {}".format(t[0], (t[1]/len(textList))/max_tf)) + "},"
     return "var frequencies = [" + output.rstrip(',') + "];"
 
